@@ -23,7 +23,7 @@ export class Inputs extends React.Component {
         return (
             <DivInputs>
                 <InputNomeUsuario placeholder="Usuário" value={this.props.inputUsuario} onChange={this.props.onChangeUsuario}></InputNomeUsuario>
-                <InputMensagem placeholder="Mensagem" value={this.props.inputMensagem} onChange={this.props.onChangeMensagem}></InputMensagem>
+                <InputMensagem placeholder="Mensagem" value={this.props.inputMensagem} onKeyDown={this.props.apertaEnter} onChange={this.props.onChangeMensagem}></InputMensagem>
                 <button onClick={this.props.enviarMensagem}>Enviar</button>
             </DivInputs> 
         )
