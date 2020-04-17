@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 const DivInputs = styled.div`
     display: flex;
-    justify-content: center;
     padding: 5px;
+    width: 100%;
 `
 
 const InputNomeUsuario = styled.input`
@@ -14,30 +14,17 @@ const InputNomeUsuario = styled.input`
 
 const InputMensagem = styled.input`
     margin-right: 5px;
-    width: 100%;
+    width: 60%;
 `
 
 export class Inputs extends React.Component {
-    state = {
-        valorUsuario: '',
-        valorMensagem: ''
-    }
-
-    onChangeUsuario = (event) => {
-        this.setState({valorUsuario: event.target.value})
-        console.log(this.state.valorUsuario)
-    }
-
-    onChangeMensagem = (event) => {
-        this.setState({valorMensagem: event.target.value})
-    }
 
     render(){
         return (
             <DivInputs>
-                <InputNomeUsuario placeholder="Usuário" value={this.state.valorUsuario} onChange={this.onChangeUsuario}></InputNomeUsuario>
-                <InputMensagem placeholder="Mensagem" value={this.state.valorMensagem} onChange={this.onChangeMensagem}></InputMensagem>
-                <button>Enviar</button>
+                <InputNomeUsuario placeholder="Usuário" value={this.props.inputUsuario} onChange={this.props.onChangeUsuario}></InputNomeUsuario>
+                <InputMensagem placeholder="Mensagem" value={this.props.inputMensagem} onChange={this.props.onChangeMensagem}></InputMensagem>
+                <button onClick={this.props.enviarMensagem}>Enviar</button>
             </DivInputs> 
         )
     }
