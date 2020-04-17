@@ -102,7 +102,7 @@ export class Mensagens extends React.Component{
     render(){
 
         const listaDeMensagens = this.state.mensagens.map((mensagem) => {
-            return <MensagensEu onDoubleClick={this.removeMensagem}>{mensagem.mensagem}</MensagensEu>
+            return <MensagensP onDoubleClick={this.removeMensagem}><strong>{mensagem.usuario}: </strong>{mensagem.mensagem}</MensagensP>
         })
 
         return(
