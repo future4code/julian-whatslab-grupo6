@@ -13,13 +13,29 @@ const ContainerMensagens = styled.div`
     border: 1px solid #000;
 `
 const DivMensagens = styled.div`
-    display: block;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: 10%;
+    margin-bottom: 10px;
+`
+
+const DivMensagensEu = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-bottom: 10px;
 `
 
 const MensagensP = styled.p`
+    display: flex;
+    text-align: left;
+    
 `
 const MensagensEu = styled.p`
-    margin: 70px;
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 5%;
 `
 
 export class Mensagens extends React.Component{
@@ -27,7 +43,6 @@ export class Mensagens extends React.Component{
         mensagens: [],
         inputUsuario: '',
         inputMensagem: '',
-        verificaEu: false
     }
 
     onChangeUsuario = (event) => {
@@ -39,27 +54,34 @@ export class Mensagens extends React.Component{
     }
 
     enviarMensagem = () => {
+        
         const novaMensagem = {
             usuario: this.state.inputUsuario,
-            mensagem: this.state.inputMensagem
+            mensagem: this.state.inputMensagem,
         }
-
-        if (this.state.inputUsuario === "eu"){
-            this.setState({
-                verificaEu: true
-            })
-        }else{
-            this.setState({
-                verificaEu: false
-            })
-        }
-
+        
         const novaListaDeMensagens = [...this.state.mensagens, novaMensagem]
 
         this.setState({
             mensagens: novaListaDeMensagens,
             inputMensagem: ''
         })
+    }
+
+    apertaEnter = (event) => {
+        
+        if (event.key === "Enter"){
+            const novaMensagem = {
+                usuario: this.state.inputUsuario,
+                mensagem: this.state.inputMensagem,
+            }
+            const novaListaDeMensagens = [...this.state.mensagens, novaMensagem]
+    
+            this.setState({
+                mensagens: novaListaDeMensagens,
+                inputMensagem: ''
+            })
+        }
     }
 
     removeMensagem = (mensagemIndex) => {
@@ -74,40 +96,18 @@ export class Mensagens extends React.Component{
         }
     }
 
-    apertaEnter = (event) => {
-        if (event.key === "Enter"){
-            const novaMensagem = {
-                usuario: this.state.inputUsuario,
-                mensagem: this.state.inputMensagem
-            }
-
-        if (this.state.inputUsuario === "eu"){
-            this.setState({
-                verificaEu: true
-            })
-        }else{
-            this.setState({
-                verificaEu: false
-            })
-        }
-            const novaListaDeMensagens = [...this.state.mensagens, novaMensagem]
-    
-            this.setState({
-                mensagens: novaListaDeMensagens,
-                inputMensagem: ''
-            })
-        }
-    }
-
     render(){
 
         const listaDeMensagens = this.state.mensagens.map((mensagem) => {
-            return <MensagensP onDoubleClick={this.removeMensagem}><strong>{mensagem.usuario}: </strong>{mensagem.mensagem}</MensagensP>
+            if(mensagem.usuario.toUpperCase() === "EU"){
+                return <DivMensagensEu><MensagensEu onDoubleClick={this.removeMensagem}>{mensagem.mensagem}</MensagensEu></DivMensagensEu>
+            }
+            return <DivMensagens><MensagensP onDoubleClick={this.removeMensagem}><strong>{mensagem.usuario}</strong>{": "}{mensagem.mensagem}</MensagensP></DivMensagens>
         })
 
         return(
             <ContainerMensagens>
-                <DivMensagens>{listaDeMensagens}</DivMensagens>
+                {listaDeMensagens}
                 <Inputs 
                     inputUsuario={this.state.inputUsuario} 
                     onChangeUsuario={this.onChangeUsuario}
